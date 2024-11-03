@@ -34,30 +34,6 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitDeclaration(ExprParser.DeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Multiplication}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiplication(ExprParser.MultiplicationContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Multiplication}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiplication(ExprParser.MultiplicationContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddition(ExprParser.AdditionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddition(ExprParser.AdditionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
@@ -81,4 +57,40 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumber(ExprParser.NumberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddSub(ExprParser.AddSubContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddSub(ExprParser.AddSubContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Parens}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterParens(ExprParser.ParensContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Parens}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitParens(ExprParser.ParensContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MultDivMod}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultDivMod(ExprParser.MultDivModContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MultDivMod}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultDivMod(ExprParser.MultDivModContext ctx);
 }

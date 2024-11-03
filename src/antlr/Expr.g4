@@ -9,10 +9,11 @@ prog: ((decl | expr) ';')+ EOF # Program;
 decl: INT_TYPE ID '=' expr # Declaration;
 
 expr:
-	expr '*' expr	# Multiplication
-	| expr '+' expr	# Addition
-	| ID			# Variable
-	| NUM			# Number;
+	'(' expr ')'					# Parens
+	| expr ('*' | '/' | '%') expr	# MultDivMod
+	| expr ('+' | '-') expr			# AddSub
+	| ID							# Variable
+	| NUM							# Number;
 
 INT_TYPE: 'int';
 ID: [a-z][a-zA-Z0-9_]*;

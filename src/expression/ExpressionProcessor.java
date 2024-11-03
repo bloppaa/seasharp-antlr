@@ -42,18 +42,34 @@ public class ExpressionProcessor {
 		} else if (e instanceof Variable) {
 			Variable var = (Variable) e;
 			result = values.get(var.id);
-		} else if (e instanceof Addition) {
-			Addition add = (Addition) e;
+		} else if (e instanceof AddSub) {
+			AddSub add = (AddSub) e;
 			int left = getEvalResult(add.left);
 			int right = getEvalResult(add.right);
-			result = left + right;
-		} else if (e instanceof Multiplication) {
-			Multiplication mult = (Multiplication) e;
+			switch (add.operator) {
+				case "+":
+					result = left + right;
+					break;
+				case "-":
+					result = left - right;
+					break;
+			}
+		} else if (e instanceof MultDivMod) {
+			MultDivMod mult = (MultDivMod) e;
 			int left = getEvalResult(mult.left);
 			int right = getEvalResult(mult.right);
-			result = left * right;
+			switch (mult.operator) {
+				case "*":
+					result = left * right;
+					break;
+				case "/":
+					result = left / right;
+					break;
+				case "%":
+					result = left % right;
+					break;
+			}
 		}
-
 		return result;
 	}
 }

@@ -21,12 +21,12 @@ public class ExpressionApp {
 		} else {
 			String fileName = args[0];
 			ExprParser parser = getParser(fileName);
-			
+
 			ParseTree antlrAST = parser.prog();
-			
+
 			AntlrToProgram progVisitor = new AntlrToProgram();
 			Program prog = progVisitor.visit(antlrAST);
-			
+
 			if (progVisitor.semanticErrors.isEmpty()) {
 				ExpressionProcessor ep = new ExpressionProcessor(prog.expressions);
 				for (String evaluation : ep.getEvaluationResults()) {
@@ -42,7 +42,7 @@ public class ExpressionApp {
 
 	private static ExprParser getParser(String fileName) {
 		ExprParser parser = null;
-		
+
 		try {
 			CharStream input = CharStreams.fromFileName(fileName);
 			ExprLexer lexer = new ExprLexer(input);
@@ -51,7 +51,7 @@ public class ExpressionApp {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return parser;
 	}
 }

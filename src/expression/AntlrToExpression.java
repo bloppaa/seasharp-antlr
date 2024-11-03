@@ -6,9 +6,9 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 
 import antlr.ExprBaseVisitor;
-import antlr.ExprParser.AdditionContext;
+import antlr.ExprParser.AddSubContext;
 import antlr.ExprParser.DeclarationContext;
-import antlr.ExprParser.MultiplicationContext;
+import antlr.ExprParser.MultDivModContext;
 import antlr.ExprParser.NumberContext;
 import antlr.ExprParser.VariableContext;
 
@@ -42,17 +42,19 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitMultiplication(MultiplicationContext ctx) {
+	public Expression visitMultDivMod(MultDivModContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		return new Multiplication(left, right);
+		String operator = ctx.getChild(1).getText();
+		return new MultDivMod(left, right, operator);
 	}
 
 	@Override
-	public Expression visitAddition(AdditionContext ctx) {
+	public Expression visitAddSub(AddSubContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		return new Addition(left, right);
+		String operator = ctx.getChild(1).getText();
+		return new AddSub(left, right, operator);
 	}
 
 	@Override
