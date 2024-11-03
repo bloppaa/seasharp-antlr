@@ -202,7 +202,9 @@ public class ExprParser extends Parser {
 	public static class DeclarationContext extends DeclContext {
 		public TerminalNode INT_TYPE() { return getToken(ExprParser.INT_TYPE, 0); }
 		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
-		public TerminalNode NUM() { return getToken(ExprParser.NUM, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
 		public DeclarationContext(DeclContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -233,7 +235,7 @@ public class ExprParser extends Parser {
 			setState(16);
 			match(T__0);
 			setState(17);
-			match(NUM);
+			expr(0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -470,7 +472,7 @@ public class ExprParser extends Parser {
 		"\u000b\u0001\u0000\u0000\u0000\u000b\f\u0001\u0000\u0000\u0000\f\r\u0005"+
 		"\u0000\u0000\u0001\r\u0001\u0001\u0000\u0000\u0000\u000e\u000f\u0005\u0004"+
 		"\u0000\u0000\u000f\u0010\u0005\u0005\u0000\u0000\u0010\u0011\u0005\u0001"+
-		"\u0000\u0000\u0011\u0012\u0005\u0006\u0000\u0000\u0012\u0003\u0001\u0000"+
+		"\u0000\u0000\u0011\u0012\u0003\u0004\u0002\u0000\u0012\u0003\u0001\u0000"+
 		"\u0000\u0000\u0013\u0014\u0006\u0002\uffff\uffff\u0000\u0014\u0017\u0005"+
 		"\u0005\u0000\u0000\u0015\u0017\u0005\u0006\u0000\u0000\u0016\u0013\u0001"+
 		"\u0000\u0000\u0000\u0016\u0015\u0001\u0000\u0000\u0000\u0017 \u0001\u0000"+

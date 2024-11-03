@@ -12,10 +12,10 @@ import antlr.ExprParser.MultiplicationContext;
 import antlr.ExprParser.NumberContext;
 import antlr.ExprParser.VariableContext;
 
-public class AntlrToExpression extends ExprBaseVisitor<Expression>{
+public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	private List<String> vars;
 	private List<String> semanticErrors;
-	
+
 	public AntlrToExpression(List<String> semanticErrors) {
 		vars = new ArrayList<String>();
 		this.semanticErrors = semanticErrors;
@@ -26,20 +26,19 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression>{
 		Token idToken = ctx.ID().getSymbol();
 		int line = idToken.getLine();
 		int column = idToken.getCharPositionInLine() + 1;
-		
+
 		String id = ctx.ID().getText();
 		if (vars.contains(id)) {
 			String error = String.format(
-			    "Error: variable %s already declared (%d:%d)", id, line, column
-			);
+					"Error: variable %s already declared (%d:%d)", id, line, column);
 			semanticErrors.add(error);
 		} else {
 			vars.add(id);
 		}
-		
+
 		String type = ctx.INT_TYPE().getText();
-		int value = Integer.parseInt(ctx.NUM().getText());
-		return new VariableDeclaration(id, type, value);
+		Expression expr = visit(ctx.expr());
+		return new VariableDeclaration(id, type, expr);
 	}
 
 	@Override
@@ -61,12 +60,11 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression>{
 		Token idToken = ctx.ID().getSymbol();
 		int line = idToken.getLine();
 		int column = idToken.getCharPositionInLine() + 1;
-		
+
 		String id = ctx.ID().getText();
 		if (!vars.contains(id)) {
 			String error = String.format(
-				    "Error: variable %s not declared (%d:%d)", id, line, column
-				);
+					"Error: variable %s not declared (%d:%d)", id, line, column);
 			semanticErrors.add(error);
 		}
 		return new Variable(id);
@@ -77,5 +75,5 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression>{
 		int num = Integer.parseInt(ctx.NUM().getText());
 		return new Number(num);
 	}
-	
+
 }

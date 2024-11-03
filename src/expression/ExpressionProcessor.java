@@ -8,32 +8,34 @@ import java.util.Map;
 public class ExpressionProcessor {
 	List<Expression> list;
 	public Map<String, Integer> values;
-	
+
 	public ExpressionProcessor(List<Expression> list) {
 		this.list = list;
 		values = new HashMap<String, Integer>();
 	}
-	
+
 	public List<String> getEvaluationResults() {
 		List<String> evaluations = new ArrayList<String>();
-		
+
 		for (Expression e : list) {
 			if (e instanceof VariableDeclaration) {
 				VariableDeclaration decl = (VariableDeclaration) e;
-				values.put(decl.id, decl.value);
+				Expression expr = decl.expr;
+				int result = getEvalResult(expr);
+				values.put(decl.id, result);
 			} else {
 				String input = e.toString();
 				int result = getEvalResult(e);
 				evaluations.add(input + " is " + result);
 			}
 		}
-		
+
 		return evaluations;
 	}
-	
+
 	private int getEvalResult(Expression e) {
 		int result = 0;
-		
+
 		if (e instanceof Number) {
 			Number num = (Number) e;
 			result = num.num;
@@ -51,7 +53,7 @@ public class ExpressionProcessor {
 			int right = getEvalResult(mult.right);
 			result = left * right;
 		}
-		
+
 		return result;
 	}
 }

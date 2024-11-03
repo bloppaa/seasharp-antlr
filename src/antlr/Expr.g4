@@ -6,7 +6,7 @@ package antlr;
 
 prog: (decl | expr)+ EOF # Program;
 
-decl: INT_TYPE ID '=' NUM # Declaration;
+decl: INT_TYPE ID '=' expr # Declaration;
 
 expr:
 	expr '*' expr	# Multiplication
