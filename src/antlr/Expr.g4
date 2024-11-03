@@ -4,7 +4,7 @@ grammar Expr;
 package antlr;
 }
 
-prog: (decl | expr)+ EOF # Program;
+prog: ((decl | expr) ';')+ EOF # Program;
 
 decl: INT_TYPE ID '=' expr # Declaration;
 

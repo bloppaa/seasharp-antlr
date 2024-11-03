@@ -17,11 +17,11 @@ public class ExpressionProcessor {
 	public List<String> getEvaluationResults() {
 		List<String> evaluations = new ArrayList<String>();
 
-		for (Expression e : list) {
+		for (int i = 0; i < list.size(); i += 2) {
+			Expression e = list.get(i);
 			if (e instanceof VariableDeclaration) {
 				VariableDeclaration decl = (VariableDeclaration) e;
-				Expression expr = decl.expr;
-				int result = getEvalResult(expr);
+				int result = getEvalResult(decl.expr);
 				values.put(decl.id, result);
 			} else {
 				String input = e.toString();
