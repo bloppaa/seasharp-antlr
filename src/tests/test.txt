@@ -1,5 +1,5 @@
-i: INT = 3
-j: INT = 4
+int i = 3
+int j = 4
 i
 j
 i + j * 2
