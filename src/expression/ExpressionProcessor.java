@@ -42,6 +42,9 @@ public class ExpressionProcessor {
 		} else if (e instanceof Variable) {
 			Variable var = (Variable) e;
 			result = values.get(var.id);
+		} else if (e instanceof Parens) {
+			Parens parens = (Parens) e;
+			result = getEvalResult(parens.expr);
 		} else if (e instanceof AddSub) {
 			AddSub add = (AddSub) e;
 			int left = getEvalResult(add.left);

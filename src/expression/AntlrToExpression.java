@@ -10,6 +10,7 @@ import antlr.ExprParser.AddSubContext;
 import antlr.ExprParser.DeclarationContext;
 import antlr.ExprParser.MultDivModContext;
 import antlr.ExprParser.NumberContext;
+import antlr.ExprParser.ParensContext;
 import antlr.ExprParser.VariableContext;
 
 public class AntlrToExpression extends ExprBaseVisitor<Expression> {
@@ -55,6 +56,12 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		Expression right = visit(ctx.getChild(2));
 		String operator = ctx.getChild(1).getText();
 		return new AddSub(left, right, operator);
+	}
+
+	@Override
+	public Expression visitParens(ParensContext ctx) {
+		Expression expr = visit(ctx.expr());
+		return new Parens(expr);
 	}
 
 	@Override
