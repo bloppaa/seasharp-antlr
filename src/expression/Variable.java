@@ -6,6 +6,10 @@ public class Variable extends Expression {
 	public Variable(String id) {
 		this.id = id;
 	}
+
+	public String getId() {
+        	return id;
+    	}
 	
 	@Override
 	public String toString() {
