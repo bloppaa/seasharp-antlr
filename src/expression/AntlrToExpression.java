@@ -16,10 +16,12 @@ import antlr.ExprParser.VariableContext;
 public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 	private List<String> vars;
 	private List<String> semanticErrors;
+	Map<String, String> varTypes;
 
 	public AntlrToExpression(List<String> semanticErrors) {
 		vars = new ArrayList<String>();
 		this.semanticErrors = semanticErrors;
+		varTypes = new HashMap<>();
 	}
 
 	@Override
@@ -35,11 +37,19 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 			semanticErrors.add(error);
 		} else {
 			vars.add(id);
+			 String type =  ctx.getChild(0).getText();
+	         	 varTypes.put(id, type);
 		}
-
-		String type = ctx.INT_TYPE().getText();
 		Expression expr = visit(ctx.expr());
-		return new VariableDeclaration(id, type, expr);
+		String varType = varTypes.get(id);
+        	String exprType = getExpressionType(expr);
+        	if (!varType.equals(exprType)) {
+           		 String error = String.format(
+                   		 "Error: incompatible types: variable %s is of type %s but assigned expression of type %s (%d:%d)",
+                   		  id, varType, exprType, line, column);
+           		 semanticErrors.add(error);
+        	}
+		return new VariableDeclaration(id, varTypes.get(id), expr);
 	}
 
 	@Override
@@ -84,5 +94,25 @@ public class AntlrToExpression extends ExprBaseVisitor<Expression> {
 		int num = Integer.parseInt(ctx.NUM().getText());
 		return new Number(num);
 	}
+	
+	private String getExpressionType(Expression expr) {
+		if (expr instanceof Number) {
+            return "int"; //suponiendo que solo usaremos el int
+        } else if (expr instanceof Variable) {
+            String varName = ((Variable) expr).getId();
+            return varTypes.getOrDefault(varName, "unknown");
+        } else if (expr instanceof MultDivMod || expr instanceof AddSub) {
+            return "int";
+        } else if (expr instanceof Parens) {
+            return getExpressionType(((Parens) expr).getExpression());
+        }
+        return "unknown";
+    }
+	/* SI TENEMOS LA EXPRESION STRING 
+    public Expression visitString(StringContext ctx) {
+        String str = ctx.STRING().getText().replace("\"", "");
+        return new String(str);
+    }
+	*/
 
 }
